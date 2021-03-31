@@ -1,0 +1,17 @@
+<%-include("partials/header.ejs")%>
+    <h1>Compose</h1>
+    <form action="/" method="POST">
+        <div class="form-group"><label for="exampleInputEmail1" class="form-label">Title</label>
+            <input class="form-control" type="text" name="Title" id="title" autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label for="textarea" class="form-label">Post</label>
+            <textarea  class="form-control" name="entry" id="textarea" rows="10" cols="40" style="resize: none;"></textarea>
+        </div>
+
+       <div class="col auto">
+           <button type="submit" name="button" class="btn btn-primary">Publish</button>
+        </div> 
+    </form>
+<%-include("partials/footer.ejs")%>
