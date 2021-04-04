@@ -2,12 +2,13 @@
     <h1>Home</h1>
     <p><%=homeC%></p>
     <div>
-        <%for(entry of entries){%>
-          <div>
-              <h2><%=entry.title%></h2>
-              <p><%=entry.description.substring(0,100)+"..."%><a href="posts/<%=entry.title.replace(' ','-').toLowerCase()%>">Read More</a></p>
-          </div>
-        <%}%>
+        <%entries.forEach(function(entry){%>
+            <div>
+                <h2><%=entry.name%></h2>
+                <p><%=entry.description.substring(0,100)+"..."%><a href="posts/<%=entry._id%>">Read More</a></p>
+            </div>
+        <%})%>
+        
     </div>
     
 <%-include("partials/footer.ejs")%>

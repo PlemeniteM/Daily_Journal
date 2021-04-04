@@ -1,5 +1,10 @@
 <%-include("partials/header.ejs")%>
-<h2><%=post.title%></h2>
+<h2><%=post.name%></h2>
 <p><%=post.description%></p>
-
+<form action="/delete" method="POST">
+    <div class="col auto">
+        <button type="submit" name="bId" class="btn btn-danger" value="<%=post._id%>">Delete</button>
+    </div>
+   
+</form>
 <%-include("partials/footer.ejs")%>
