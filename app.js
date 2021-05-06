@@ -66,7 +66,13 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use((req, res, next) => {
+    
+    res.locals.currentUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
 passport.use(new localPassport(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -83,9 +89,14 @@ app.post('/register', async (req, res, next) => {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
         const registeredUser = await User.register(user, password);
-        console.log(registeredUser);
-        res.redirect("/");
+        req.login(registeredUser,err=>{
+            if (err) return next(err);
+            req.flash('success', 'Welcome to DailyJournal!');
+            res.redirect('/campgrounds');
+        })
+        
     } catch (e) {
+        req.flash('error',e.message);
         res.redirect('/register');
     }
 })
@@ -96,7 +107,9 @@ app.get('/login',function(req,res){
 
 app.post('/login',passport.authenticate('local',{failureFlash:true,failureRedirect:'/login'}),function(req,res){
     req.flash('success', 'welcome back!');
-    res.redirect("/");
+    const redirectUrl=req.session.returnTo||'/';
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
 })
 
 
@@ -126,6 +139,7 @@ app.get("/",function(req,res){
                 if(err)console.log(err);
                 else{console.log("success");}
             })
+            console.log(req.user);
             res.redirect("/");
       }
       else
@@ -136,6 +150,7 @@ app.get("/",function(req,res){
 
 app.get("/contacts",function(req,res){
     if(!req.isAuthenticated()){
+        req.session.returnTo=req.originalUrl;
         res.redirect('/login');
     }
     else
@@ -145,6 +160,7 @@ app.get("/contacts",function(req,res){
 
 app.get("/about",function(req,res){
     if(!req.isAuthenticated()){
+        req.session.returnTo=req.originalUrl;
         res.redirect('/login');
     }
     else
@@ -154,6 +170,7 @@ app.get("/about",function(req,res){
 
 app.get("/compose",function(req,res){
     if(!req.isAuthenticated()){
+        req.session.returnTo=req.originalUrl;
         res.redirect('/login');
     }
     else
@@ -164,6 +181,7 @@ app.get("/compose",function(req,res){
 
 app.get("/posts/:id",function(req,res){
     if(!req.isAuthenticated()){
+        req.session.returnTo=req.originalUrl;
         res.redirect('/login');
     }
     else{
@@ -181,6 +199,7 @@ app.get("/posts/:id",function(req,res){
 
 app.post("/delete",function(req,res){
     if(!req.isAuthenticated()){
+        req.session.returnTo=req.originalUrl;
         res.redirect('/login');
     }
     else{
@@ -197,6 +216,7 @@ app.post("/delete",function(req,res){
 
 app.post("/",function(req,res){
     if(!req.isAuthenticated()){
+        req.session.returnTo=req.originalUrl;
         res.redirect('/login');
     }
     else{

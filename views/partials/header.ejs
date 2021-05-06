@@ -19,9 +19,12 @@
             <li id="about"><a href="/about">ABOUT US</a></li>
             <li id="contact"><a href="/contacts">CONTACT US</a></li>
             <li id="Compose"><a href="/compose">COMPOSE</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/Register">Register</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <% if(!currentUser){%>
+            <li><a href="/login">LOGIN</a></li>
+            <li><a href="/Register">REGISTER</a></li>
+            <%} else{%>
+            <li><a href="/logout">LOGOUT</a></li>
+            <%}%>
           </ul>
       </div>
     </nav>
