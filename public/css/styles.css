@@ -2,7 +2,18 @@
     padding-top: 70px;
     padding-bottom: 70px;
 }
+h1{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+h2{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+p{
+    font-family:  Geneva, Tahoma, sans-serif;
+}
 .navbar {
+    background-color: rgb(183, 208, 209);
+    color: rgb(10, 12, 3);
     padding-top: 15px;
     padding-bottom: 15px;
     border: 0;
@@ -12,8 +23,8 @@
     letter-spacing: 5px;
 }
 .navbar-nav  li a:hover {
-    color: #82cabc !important;
-    font-style: italic;
+    color: #050707 !important;
+    
 }
 
 .footer-padding {

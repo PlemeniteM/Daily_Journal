@@ -36,27 +36,33 @@ app.use(express.static("public"));
 app.get("/",function(req,res){
     Blog.find({},function(err,results){
         if(results.length===0){
-              Blog.insertMany(defaultEntries,function(err){
-                  if(err)console.log(err);
-                  else{console.log("success");}
-              })
-              res.redirect("/");
-        }
-        else
-            res.render("home.ejs",{homeC:homeContent,entries:results});
+            Blog.insertMany(defaultEntries,function(err){
+                if(err)console.log(err);
+                else{console.log("success");}
+            })
+            res.redirect("/");
+      }
+      else
+          res.render("home.ejs",{homeC:homeContent,entries:results});
     })
-    
 })
+
+
 app.get("/contacts",function(req,res){
     res.render("contact.ejs",{contactC:contactDetails});
 })
+
+
 app.get("/about",function(req,res){
     res.render("about.ejs",{aboutC:aboutContent});
 })
 
+
 app.get("/compose",function(req,res){
     res.render("compose.ejs");
 })
+
+
 
 app.get("/posts/:id",function(req,res){
     const blogId=req.params.id
@@ -68,6 +74,7 @@ app.get("/posts/:id",function(req,res){
     })
 })
 
+
 app.post("/delete",function(req,res){
     Blog.findByIdAndDelete({_id:req.body.bId},function(err){
         if(err)console.log(err);
@@ -76,16 +83,17 @@ app.post("/delete",function(req,res){
         }
     })
 })
-app.post("/",function(req,res){
 
+
+app.post("/",function(req,res){
     const blog=new Blog({
         name:req.body.Title,
         description:req.body.entry
     })
     blog.save();
-    //posts.push(post);
     res.redirect("/");
 })
+
 
 app.listen(3000,function(req,res){
     console.log("Listening on 3000");
