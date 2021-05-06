@@ -102,7 +102,10 @@ app.post('/login',passport.authenticate('local',{failureFlash:true,failureRedire
 
 
 
-
+app.get('/logout',function(req,res){
+    req.logOut();
+    res.redirect("/");
+})
 
 
 
