@@ -3,7 +3,7 @@
     padding-bottom: 70px;
 }
 h1{
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Playfair Display', serif;
 }
 h2{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -19,7 +19,7 @@ p{
     border: 0;
     border-radius: 0;
     margin-bottom: 0;
-    font-size: 12px;
+    font-size: 17px;
     letter-spacing: 5px;
 }
 .navbar-nav  li a:hover {

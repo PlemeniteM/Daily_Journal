@@ -7,7 +7,8 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
-  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
   <body>
     <nav class="navbar navbar-default">
       <div class="container">
@@ -16,14 +17,12 @@
         </div>
           <ul class="nav navbar-nav navbar-right">
             <li id="home"><a href="/">HOME</a></li>
-            <li id="about"><a href="/about">ABOUT US</a></li>
-            <li id="contact"><a href="/contacts">CONTACT US</a></li>
             <li id="Compose"><a href="/compose">COMPOSE</a></li>
             <% if(!currentUser){%>
             <li><a href="/login">LOGIN</a></li>
             <li><a href="/Register">REGISTER</a></li>
             <%} else{%>
-            <li><a href="/logout">LOGOUT</a></li>
+            <li><a href="/logout">LOGOUT||<strong>@<%=currentUser.username%></strong></a></li>
             <%}%>
           </ul>
       </div>

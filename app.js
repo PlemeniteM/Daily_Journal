@@ -18,10 +18,7 @@ useCreateIndex: true,
 useUnifiedTopology: true,
 useFindAndModify: false});
 
-const blogSchema=new mongoose.Schema({
-    name:String,
-    description:String
-});
+
 
 const userSchema=new mongoose.Schema({
     email:{
@@ -34,16 +31,25 @@ const userSchema=new mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 
 const User=mongoose.model("User",userSchema);
-
+const blogSchema=new mongoose.Schema({
+    name:String,
+    description:String,
+    author:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
+});
 const Blog=mongoose.model("Blog",blogSchema);
 
 const blog1=new Blog({
 name:"Day1",
-description:"Default post 1"
+description:"Default post 1",
+author:'60941cb0d3ef0229e800f530'
 })
 const blog2=new Blog({
 name:"Day 2",
-description:"Default post 2"
+description:"Default post 2",
+author:'60941cb0d3ef0229e800f530'
 })
 
 const defaultEntries=[blog1,blog2];
@@ -133,39 +139,23 @@ app.get('/logout',function(req,res){
 
 
 app.get("/",function(req,res){
-    Blog.find({},function(err,results){
-        if(results.length===0){
-            Blog.insertMany(defaultEntries,function(err){
-                if(err)console.log(err);
-                else{console.log("success");}
-            })
-            console.log(req.user);
-            res.redirect("/");
-      }
-      else
-          res.render("home.ejs",{homeC:homeContent,entries:results});
-    })
-})
-
-
-app.get("/contacts",function(req,res){
-    if(!req.isAuthenticated()){
-        req.session.returnTo=req.originalUrl;
-        res.redirect('/login');
+    if(!req.user){
+        res.render('home.ejs');
     }
-    else
-    res.render("contact.ejs",{contactC:contactDetails});
-})
-
-
-app.get("/about",function(req,res){
-    if(!req.isAuthenticated()){
-        req.session.returnTo=req.originalUrl;
-        res.redirect('/login');
+    else{
+        
+        Blog.find({author:req.user._id},function(err,results){
+            res.render("home.ejs",{homeC:homeContent,entries:results});
+        })
     }
-    else
-    res.render("about.ejs",{aboutC:aboutContent});
+    
 })
+
+
+
+
+
+
 
 
 app.get("/compose",function(req,res){
@@ -186,12 +176,13 @@ app.get("/posts/:id",function(req,res){
     }
     else{
         const blogId=req.params.id
-        Blog.findById({_id:blogId},function(err,result){
+        Blog.findById(blogId,function(err,result){
             if(err)console.log(err);
             else{
+                console.log(result);
                 res.render("post.ejs",{post:result});
             }
-        })
+        }).populate('author');
     }
     
 })
@@ -224,6 +215,7 @@ app.post("/",function(req,res){
             name:req.body.Title,
             description:req.body.entry
         })
+        blog.author=req.user._id;
         blog.save();
         res.redirect("/");
     }
