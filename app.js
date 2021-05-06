@@ -92,7 +92,7 @@ app.post('/register', async (req, res, next) => {
         req.login(registeredUser,err=>{
             if (err) return next(err);
             req.flash('success', 'Welcome to DailyJournal!');
-            res.redirect('/campgrounds');
+            res.redirect('/');
         })
         
     } catch (e) {
