@@ -16,12 +16,13 @@
           <p class="navbar-brand">DAILY JOURNAL</p>
         </div>
           <ul class="nav navbar-nav navbar-right">
-            <li id="home"><a href="/">HOME</a></li>
-            <li id="Compose"><a href="/compose">COMPOSE</a></li>
+            
             <% if(!currentUser){%>
             <li><a href="/login">LOGIN</a></li>
             <li><a href="/Register">REGISTER</a></li>
             <%} else{%>
+              <li id="home"><a href="/">HOME</a></li>
+            <li id="Compose"><a href="/compose">COMPOSE</a></li>
             <li><a href="/logout">LOGOUT||<strong>@<%=currentUser.username%></strong></a></li>
             <%}%>
           </ul>
