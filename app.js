@@ -1,3 +1,4 @@
+
 const express=require("express");
 const mongoose=require("mongoose");
 const passportLocalMongoose=require("passport-local-mongoose");
@@ -11,9 +12,9 @@ const homeContent="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
 const aboutContent="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const contactDetails="Venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin. Sed arcu non odio euismod. Sollicitudin nibh sit amet commodo nulla facilisi nullam. Sagittis purus sit amet volutpat consequat mauris nunc congue. Viverra aliquet eget sit amet tellus cras adipiscing enim eu. Vel facilisis volutpat est velit egestas. Pellentesque id nibh tortor id aliquet lectus proin nibh. Erat imperdiet sed euismod nisi. Congue quisque egestas diam in. Sagittis aliquam malesuada bibendum arcu.";
 
-//const posts=[];
 
-mongoose.connect("mongodb://localhost:27017/Dailyjournal",{useNewUrlParser: true,
+
+mongoose.connect("mongodb+srv://kripke-admin:Plemenite77@cluster0.bwqe8.mongodb.net/Dailyjournal",{useNewUrlParser: true,
 useCreateIndex: true,
 useUnifiedTopology: true,
 useFindAndModify: false});
@@ -118,25 +119,10 @@ app.post('/login',passport.authenticate('local',{failureFlash:true,failureRedire
     res.redirect(redirectUrl);
 })
 
-
-
-
 app.get('/logout',function(req,res){
     req.logOut();
     res.redirect("/");
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.get("/",function(req,res){
     if(!req.user){
@@ -150,13 +136,6 @@ app.get("/",function(req,res){
     }
     
 })
-
-
-
-
-
-
-
 
 app.get("/compose",function(req,res){
     if(!req.isAuthenticated()){
