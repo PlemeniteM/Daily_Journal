@@ -9,6 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "14.15.4"
+  },
   "dependencies": {
     "connect-flash": "^0.1.1",
     "dotenv": "^9.0.2",
