@@ -55,7 +55,7 @@ author:'60941cb0d3ef0229e800f530'
 
 const defaultEntries=[blog1,blog2];
 const sessionConfig = {
-    secret: 'thisshouldbeabettersecret!',
+    secret: process.env.DB_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
